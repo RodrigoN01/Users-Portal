@@ -1,6 +1,6 @@
 # Users Portal
 
-A minimalist user management application built with Next.js 15+ App Router and ReqRes API.
+A user management application built with Next.js 15+ App Router and ReqRes API.
 
 ## Features
 
@@ -73,7 +73,3 @@ lib/
 - `POST /api/register` - Create new user
 - `PUT /api/users/{id}` - Update user
 - `DELETE /api/users/{id}` - Delete user
-
-## License
-
-MIT
