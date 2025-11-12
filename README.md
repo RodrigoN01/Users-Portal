@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Users Portal
+
+A minimalist user management application built with Next.js 15+ App Router and ReqRes API.
+
+## Features
+
+- **User List**: Browse paginated users with server-side rendering
+- **User Details**: View and edit individual user information
+- **Create Users**: Register new users (requires existing ReqRes email)
+- **Delete Users**: Remove users with confirmation
+- **Form Validation**: Client-side validation using Zod schemas
+- **Responsive Design**: Clean, minimalist UI with Tailwind CSS v4
+
+## Tech Stack
+
+- Next.js 16 (App Router)
+- TypeScript
+- Tailwind CSS v4
+- Zod (validation)
+- Lucide React (icons)
+- ReqRes API
 
 ## Getting Started
 
-First, run the development server:
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Create a `.env` file:
+
+```bash
+NEXT_PUBLIC_REQRES_KEY=reqres-free-v1
+```
+
+3. Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Browse**: Navigate through paginated user lists
+- **View/Edit**: Click any user card to view details and edit their information
+- **Create**: Click "Create User" and use an existing ReqRes email (e.g., eve.holt@reqres.in) for username and email fields
+- **Delete**: Click the delete button on the user detail page (requires confirmation)
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/
+  ├── page.tsx              # Home page (user list)
+  └── users/[id]/page.tsx   # User detail page
+components/
+  ├── Button.tsx            # Reusable button component
+  ├── CreateUserModal.tsx   # User registration modal
+  ├── Pagination.tsx        # Pagination controls
+  ├── UserCard.tsx          # User card display
+  ├── UserDetailClient.tsx  # User edit/delete form
+  └── UserListClient.tsx    # User list state management
+lib/
+  └── schemas.ts            # Zod validation schemas
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## API Integration
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `GET /api/users?page={page}` - Fetch paginated users
+- `GET /api/users/{id}` - Fetch single user
+- `POST /api/register` - Create new user
+- `PUT /api/users/{id}` - Update user
+- `DELETE /api/users/{id}` - Delete user
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
