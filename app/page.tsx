@@ -27,8 +27,14 @@ async function getUsers(page: number = 1) {
   };
 }
 
-export default async function Home() {
-  const { users, page, totalPages } = await getUsers(1);
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
+  const { page: pageParam } = await searchParams;
+  const page = Number(pageParam) || 1;
+  const { users, totalPages } = await getUsers(page);
 
   return (
     <UserListClient

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import UserCard from "@/components/UserCard";
 import Pagination from "@/components/Pagination";
 import CreateUserModal from "@/components/CreateUserModal";
@@ -18,36 +19,16 @@ export default function UserListClient({
   initialPage,
   totalPages,
 }: UserListClientProps) {
-  const [users, setUsers] = useState<User[]>(initialUsers);
-  const [currentPage, setCurrentPage] = useState(initialPage);
+  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const fetchUsers = async (page: number) => {
-    setIsLoading(true);
-    try {
-      const response = await fetch(`https://reqres.in/api/users?page=${page}`, {
-        headers: {
-          "x-api-key": process.env.NEXT_PUBLIC_REQRES_KEY || "",
-        },
-      });
-      const data = await response.json();
-      setUsers(data.data);
-      setCurrentPage(page);
-    } catch (error) {
-      console.error("Failed to fetch users:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const handlePageChange = (page: number) => {
-    fetchUsers(page);
+    router.push(`/?page=${page}`);
   };
 
   const handleUserCreated = () => {
-    // Refresh the user list
-    fetchUsers(currentPage);
+    // Refresh the current page
+    router.refresh();
   };
 
   return (
@@ -63,23 +44,17 @@ export default function UserListClient({
         </button>
       </div>
 
-      {isLoading ? (
-        <div className='text-center py-12 text-gray-600'>Loading...</div>
-      ) : (
-        <>
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-            {users.map((user) => (
-              <UserCard key={user.id} user={user} />
-            ))}
-          </div>
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+        {initialUsers.map((user) => (
+          <UserCard key={user.id} user={user} />
+        ))}
+      </div>
 
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
-        </>
-      )}
+      <Pagination
+        currentPage={initialPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
 
       <CreateUserModal
         isOpen={isModalOpen}
