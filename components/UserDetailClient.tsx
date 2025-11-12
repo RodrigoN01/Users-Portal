@@ -24,6 +24,10 @@ export default function UserDetailClient({ user }: UserDetailClientProps) {
     last_name: user.last_name,
     email: user.email,
   });
+  const [displayName, setDisplayName] = useState({
+    first_name: user.first_name,
+    last_name: user.last_name,
+  });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -52,6 +56,12 @@ export default function UserDetailClient({ user }: UserDetailClientProps) {
       if (!response.ok) {
         throw new Error("Failed to update user");
       }
+
+      // Update the displayed name
+      setDisplayName({
+        first_name: validatedData.first_name,
+        last_name: validatedData.last_name,
+      });
 
       setSuccessMessage("User updated successfully!");
       setTimeout(() => setSuccessMessage(""), 3000);
@@ -117,7 +127,7 @@ export default function UserDetailClient({ user }: UserDetailClientProps) {
             />
             <div>
               <h1 className='text-3xl font-semibold'>
-                {user.first_name} {user.last_name}
+                {displayName.first_name} {displayName.last_name}
               </h1>
             </div>
           </div>
