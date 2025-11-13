@@ -2,6 +2,10 @@
 
 A user management application built with Next.js 15+ App Router and ReqRes API.
 
+## Version Notes (v1)
+
+This version implements server-side CRUD operations using API endpoints. The ReqRes API returns status codes to confirm operations, but there is no visual feedback in the UI. These API requests are for testing purposes only and do not persist data permanently.
+
 ## Features
 
 - **User List**: Browse paginated users with server-side rendering
